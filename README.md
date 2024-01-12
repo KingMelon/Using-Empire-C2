@@ -6,7 +6,7 @@
 In this demonstration, we will exploit using the `Empire C2 post-exploitation framework`. After exploiting a target machine we will have the opportunity to use a variety of modules which we'll use to take screenshots of the victim machine and enable RDP.
 
 ![alt text](images/empire_logo.png)
-# Installation
+## Installation
 ---
 First, let's start by installing `powershell-empire`. Make sure to run `sudo apt install update` beforehand.
 
@@ -35,7 +35,7 @@ You will notice that we have 0 listeners and 0 agents, this is normal as we have
 Running the `help` command gives us a list of general commands we can use in Empire.
 
 ![alt text](images/picture5.png)
-# Listeners
+## Listeners
 ---
 Let's start by setting up a listener with the `uselistener http` command. Keep in mind there are many other listeners but http is a great and simple one so we'll be using it for this demonstration.
 
@@ -50,7 +50,7 @@ We will leave the name of the http listener to the default name of http. Notice 
 Now, let's back out and list out the current listeners by running the `listeners` command.
 
 ![alt text](images/picture8.png)
-# Stagers
+## Stagers
 ---
 Now that we have the listener setup let's create a stager. We will be using the `windows_cmd_exec` stager to generate a Windows executable and later send it to the victim machine. To achieve this, we will run `usestager windows_cmd_exec`.
 
@@ -68,14 +68,14 @@ To finish it up, we will run `set OutFile payload.exe` to optionally rename the 
 If at any point you would like to check the current configuration of the listener the `options` command is available to list the new values we had added.
 
 ![alt text](images/picture12.png)
-# Delivery
+## Delivery
 ---
 Now we will change our directory to `/var/lib/powershell-empire/empire/client/generated-stagers/` which is where our stager is located.
 
 From this directory, we will run `python3 -m http.server 8080` so as to easily be able to access the files at `192.168.122.61:8080` later in the Windows machine.
 
 ![alt text](images/picture13.png)
-# Exploitation
+## Exploitation
 ---
 Moving over to the Windows machine, the real-time protection will be turned off as this type of stager is easily detectable and not extensively obfuscated to bypass anti-virus software.
 
@@ -112,7 +112,7 @@ At this stage, one would normally gather as much information about the victim ma
 At this point, we can ignore our old agent and proceed with `9827FNZ4`. We will interact with it and run `whoami` indicating we are running as a standard user.
 
 ![alt text](images/picture22.png)
-# Privalange Escalation
+## Privilege Escalation
 ---
 Our current standard user has little use to us. To gain administrative permission we will utilize the `powershell_privesc_getsystem` module to get the system to run tasks as administrator. To use a module run the `usemodule` command followed by the module you would like to use.
 
@@ -122,7 +122,7 @@ Our current standard user has little use to us. To gain administrative permissio
 Since we are currently interacting with the correct agent, it sets the value automatically. After the module is executed we obtain `WORKGROUP\SYSTEM` and are now able to execute administrative tasks.
 
 ![alt text](images/picture24.png)
-# Persistence
+## Persistence
 ---
 Armed with this new level of access we can now create our persistence using the `powershell_persistence_elevated_schtasks` module which will call back to the http listener at a scheduled time.
 
@@ -132,7 +132,7 @@ Armed with this new level of access we can now create our persistence using the 
 Let's set the listener by running `set Listener http` and then execute the module. We now have persistence, we will receive a connection from this machine at `9:00 AM` every day.
 
 ![alt text](images/picture26.png)
-# Taking Screenshots
+## Taking Screenshots
 ---
 Now, let's have some fun with these modules. We can use the `powershell_collection_screenshot` module to take screenshots of the victim machine. Since we are interacting with the correct agent we don't need to specify it and can simply `execute` the module.
 
@@ -143,12 +143,12 @@ After execution, the image is stored in the `/var/lib/powershell-empire/server/d
 
 ![alt text](images/picture28.png)
 ![alt text](images/picture29.png)
-# Hash Dumping
+## Hash Dumping
 ---
 This is great and all but we can do better with RDP. Typically you would first dump the hashes of the users to later crack. We can do this with the `powershell_credentials_invoke_ntlmextract` module. This dumps the hashes of a multitude of users such as the standard user and the Administrator accounts. Now that we have the hashes, we can crack them and figure out what the user password is. After some quick cracking, the password for the `user` comes back as `user`.
 
 ![alt text](images/picture30.png)
-# Enabling RDP
+## Enabling RDP
 ---
 Now that we know the username and password of the user we can move on to enabling RDP. Here's how you would do it. First, let's start by enabling RDP on the target machine by running the `powershell_management_enable_rdp` module. In the following example, we can see the module was executed successfully and RDP is now enabled.
 
