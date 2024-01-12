@@ -5,7 +5,7 @@
 
 In this demonstration, we will exploit using the `Empire C2 post-exploitation framework`. After exploiting a target machine we will have the opportunity to use a variety of modules which we'll use to take screenshots of the victim machine and enable RDP.
 
-![[images/empire_logo.png]] ![alt text](images/picture1.png)
+![alt text](images/empire_logo.png)
 # Installation
 ---
 First, let's start by installing `powershell-empire`. Make sure to run `sudo apt install update` beforehand.
