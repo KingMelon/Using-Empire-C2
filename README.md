@@ -10,7 +10,7 @@ In this demonstration, we will exploit using the `Empire C2 post-exploitation fr
 ---
 First, let's start by installing `powershell-empire`. Make sure to run `sudo apt install update` beforehand.
 
-![Alt Text](images/picture1)
+![Alt Text](images/picture1.png)
 
 ---
 Now that we have it installed, let's initialize the Empire server by running the following command with the `server` argument.
