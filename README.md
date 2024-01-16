@@ -1,7 +1,7 @@
 # Using Empire C2
 ---
 - GitHub - https://github.com/EmpireProject/Empire
-- Website - https://github.com/EmpireProject/Empire
+- Website - www.powershellempire.com
 
 In this demonstration, we will exploit using the `Empire C2 post-exploitation framework`. After exploiting a target machine we will have the opportunity to use a variety of modules which we'll use to take screenshots of the victim machine and enable RDP.
 
